@@ -16,6 +16,9 @@
 
 */
 
+import babel from 'gulp-babel'
+
+
 var autoprefixer = require('gulp-autoprefixer');
 var browserSync = require('browser-sync').create();
 var cleanCss = require('gulp-clean-css');
@@ -23,6 +26,7 @@ var del = require('del');
 const htmlmin = require('gulp-htmlmin');
 const cssbeautify = require('gulp-cssbeautify');
 var gulp = require('gulp');
+var browserify = require('gulp-browserify');
 const npmDist = require('gulp-npm-dist');
 var sass = require('gulp-sass')(require('node-sass'));
 var wait = require('gulp-wait');
@@ -67,9 +71,28 @@ const paths = {
         css: './.temp/css',
         html: './.temp/pages',
         assets: './.temp/assets',
-        vendor: './.temp/vendor'
+        vendor: './.temp/vendor',
     }
 };
+
+// typescript
+// var ts = require("gulp-typescript");
+// var tsProject = ts.createProject("tsconfig.json");
+// gulp.task("typescript", function () {
+//     return tsProject.src().pipe(tsProject()).js.pipe(gulp.dest("dist"));
+// });
+
+// Compile SCSS
+gulp.task('js', function () {
+    return gulp.src('./src/assets/js/map.js')
+        .pipe(browserify({
+            transform: ['babelify'],
+            insertGlobals : true,
+          }))
+        .pipe(gulp.dest('./.temp/js'))
+        .pipe(browserSync.stream());
+        // https://stackoverflow.com/questions/33187695/gulp-babelify-browserify-issue
+});
 
 // Compile SCSS
 gulp.task('scss', function () {
@@ -124,9 +147,11 @@ gulp.task('vendor', function() {
 
 gulp.task('serve', gulp.series('scss', 'html', 'index', 'assets', 'vendor', function() {
     browserSync.init({
-        server: paths.temp.base
+        server: paths.temp.base,
+        host: '0.0.0.0',
+        port: 80
     });
-
+    gulp.watch(['./src/assets/js/map.js'], gulp.series('js'));
     gulp.watch([paths.src.scss + '/volt/**/*.scss', paths.src.scss + '/custom/**/*.scss', paths.src.scss + '/volt.scss'], gulp.series('scss'));
     gulp.watch([paths.src.html, paths.src.base + '*.html', paths.src.partials], gulp.series('html', 'index'));
     gulp.watch([paths.src.assets], gulp.series('assets'));
