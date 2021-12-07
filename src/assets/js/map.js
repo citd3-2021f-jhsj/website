@@ -1,15 +1,10 @@
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=visualization">
 
-console.log("start maps javascript");
-
 let map, heatmap;
 var markers =  [];
 var loc = "GLOBAL"; // GLOBAL or C5
 var debug = false;
 var c5overlay;
-
-console.log("start maps javascript2");
-
 
 function initMap() {
 
@@ -67,28 +62,29 @@ function setView(ll) {
 
     loc = "C5"
     //geojson indoor map layer
-    map.data.loadGeoJson(
-      "https://raw.githubusercontent.com/citd3-2021f-jhsj/dist/main/c5-1.geojson"
-    );
-    map.data.setStyle( function(feature) {
-      // var isBkg = feature.getProperty("isBackground");
-      // console.log(feature);
-      // var zidx = isBkg == true ? 0 : 1;
-      return {
-        fillColor: "#FFFFFF",
-        fillOpacity: 1.0,
-      };
-    });
+    // map.data.loadGeoJson(
+    //   "https://raw.githubusercontent.com/citd3-2021f-jhsj/dist/main/c5-1.geojson"
+    // );
+    // map.data.setStyle( function(feature) {
+    //   // var isBkg = feature.getProperty("isBackground");
+    //   // console.log(feature);
+    //   // var zidx = isBkg == true ? 0 : 1;
+    //   return {
+    //     fillColor: "#EEEEEE",
+    //     fillOpacity: 1.0,
+    //   };
+    // });
     document.getElementById("currentView").textContent = loc
     document.getElementById("currentView2").textContent = loc
     document.getElementById("currentFloor").textContent = 1
-    document.getElementById("totalPerson").textContent = 10
 
-    //setC5Map();
+    
 
     map.setHeading(67);
     map.setZoom(20);
     map.setCenter({ lat: 36.01436, lng: 129.32573 });
+
+    setC5Map();
     return;
   }
 
@@ -108,10 +104,10 @@ function setView(ll) {
 
 function setC5Map() {
   const imageBounds = {
-    north: 36.01394, // bigger
-    south: 36.01221,
-    east: 129.32544, // bigger
-    west: 129.322655,
+    north: 36.014791, // bigger
+    south: 36.013860,
+    east: 129.326302, // bigger
+    west: 129.325173,
   };
   // const imageBounds = {
   //   north: 36.01144,
@@ -120,7 +116,7 @@ function setC5Map() {
   //   west: 129.32480,
   // };
   c5overlay = new google.maps.GroundOverlay(
-    "https://raw.githubusercontent.com/citd3-2021f-jhsj/dist/main/test2.png",    
+    "/assets/img/c5-tilt.png",    
     // "https://storage.googleapis.com/geo-devrel-public-buckets/newark_nj_1922-661x516.jpeg",
     imageBounds
   )
@@ -205,57 +201,171 @@ function coord2pos(coord) {
 }
 
 async function callUpdate() {
+  //setInterval( testUpdatePoints, 1000) ;
   setInterval( updatePoints, 1000, );
 }
 
+var getPoints = new XMLHttpRequest();
+
+function pingDB() {
+  var ping = new XMLHttpRequest();
+  queryStr = 'http://server1.jinhoko.com:30006/ping'
+  console.log(queryStr)
+  ping.open('GET', queryStr)
+  ping.onload = function() {
+    console.log(ping.responseType)
+    console.log(ping.responseText)
+  }
+  ping.send()
+
+}
+
+function testUpdatePoints() {
+  const labelPoint = new google.maps.Point(0, 3)
+  pos = pos2coord([0,0])
+  marker = new google.maps.Marker({
+    position: { lat : pos[0], lng: pos[1]},
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      fillColor: 'black',
+      fillOpacity: 1.0,
+      strokeColor: 'black',
+      scale: 5,
+      labelOrigin: labelPoint
+    },
+    map: map,
+  });
+  markers.push(marker)
+
+  pos = pos2coord([8.8,0])
+  marker = new google.maps.Marker({
+    position: { lat : pos[0], lng: pos[1]},
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      fillColor: 'black',
+      fillOpacity: 1.0,
+      strokeColor: 'black',
+      scale: 4,
+      labelOrigin: labelPoint
+    },
+    map: map,
+  });
+  markers.push(marker)
+
+  pos = pos2coord([0,6.6])
+  marker = new google.maps.Marker({
+    position: { lat : pos[0], lng: pos[1]},
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      fillColor: 'black',
+      fillOpacity: 1.0,
+      strokeColor: 'black',
+      scale: 4,
+      labelOrigin: labelPoint
+    },
+    map: map,
+  });
+  markers.push(marker)
+
+  pos = pos2coord([8.8,6.6])
+  marker = new google.maps.Marker({
+    position: { lat : pos[0], lng: pos[1]},
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      fillColor: 'black',
+      fillOpacity: 1.0,
+      strokeColor: 'black',
+      scale: 4,
+      labelOrigin: labelPoint
+    },
+    map: map,
+  });
+  markers.push(marker)
+
+}
+
+
 function updatePoints() {
-    console.log('update');
 
     // remove original points
     removeAllMarkers();
+    //pingDB();
 
     // check if C5
     if( loc != "C5" ) {
       return;
     }
-
-    // get data
-    const pos = pos2coord([4.4,3.3])
-    const pos2 = pos2coord([3.3,2.2])
-    
-    // add points
     const labelPoint = new google.maps.Point(0, 3)
-    const marker = new google.maps.Marker({
-      position: { lat : pos[0], lng: pos[1]},
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        fillColor: 'red',
-        fillOpacity: 1.0,
-        strokeColor: 'red',
-        scale: 5,
-        labelOrigin: labelPoint
-      },
-      label: ( debug ? { text: "B001 | .03" } : {}),
-      map: map,
-    });
 
-    const marker2 = new google.maps.Marker({
-      position: { lat : pos2[0], lng: pos2[1]},
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        fillColor: 'green',
-        fillOpacity: 1.0,
-        strokeColor: 'green',
-        scale: 5,
-        labelOrigin: labelPoint
-      },
-      label: ( debug ? { text: "B002 | .03" } : {}),
-      map: map,
-    });
+    queryStr = 'http://server1.jinhoko.com:30006/query?db=sensor&q=select * from pos' // TODO modify the query
+    // https://archive.docs.influxdata.com/influxdb/v1.2/tools/api/#query-string-parameters
+    console.log(queryStr)
+    getPoints.open('GET', queryStr)
+    var done = false;
+    var data;
+    getPoints.onload = function() {
+      //console.log(getPoints.responseText)
+      // TODO check if error
+      done = true;
+      data = getPoints.responseText;
 
-    markers.push(marker)
-    markers.push(marker2)    
+      // async update
+      const posData = JSON.parse(data);
+      // console.log(posData['results'][0]['series'][0]['values'])
+      arr = posData['results'][0]['series'][0]['values']
+
+      document.getElementById("totalPerson").textContent = arr.length
+      for( var i = 0; i < arr.length; i++) {
+        it = arr[i]
+        //console.log(it)
+        time = it[0] 
+        n = it[1]
+        p = it[2]
+        x = it[3]
+        y = it[4]
+
+        pos = pos2coord([x,y])
+        marker = new google.maps.Marker({
+          position: { lat : pos[0], lng: pos[1]},
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: probToColor(p),
+            fillOpacity: 1.0,
+            strokeColor: 'black',
+            strokeWeight: 2,
+            scale: 5,
+            labelOrigin: labelPoint
+          },
+          label: ( debug ? { text: n+ " | "+p } : {}),
+          map: map,
+        });
+        markers.push(marker)
+
+      }
+    }
+    getPoints.send()
+    
 }
+
+function probToColor(p) {
+  return rgbToHex( Math.min(255,2*255*(p)), Math.min(255,2*255*(1.0-p)), 50 )
+  // return rgbToHex( (1.0-p)*255 , p*255, 127  )
+}
+
+function rgbToHex ( r,g,b ){ 
+
+  var rgb = [r.toString(),g.toString(),b.toString()]
+  
+  rgb.forEach(function (str, x, arr){ 
+        
+      str = parseInt( str, 10 ).toString( 16 ); 
+      if ( str.length === 1 ) str = "0" + str; 
+      
+      arr[ x ] = str; 
+  }); 
+  
+  return "#" + rgb.join( "" ); 
+} 
 
 function setMapOnAll(map) {
   for (let i = 0; i < markers.length; i++) {
