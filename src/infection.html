@@ -95,7 +95,27 @@
 									<input class="form-check-input" type="checkbox" value="" id="defaultCheck10">
                                 </div>
                             </td>
-                        </tr>                                
+                        </tr>   
+                        <!-- Item -->
+                        <tr>
+                            <td>
+                                <a href="#" class="fw-bold">
+                                    2
+                                </a>
+                            </td>
+                            <td>
+                                <span class="fw-normal">B003</span>
+                            </td>
+                            <td><span class="fw-normal">4 Dec 2021</span></td>                        
+                            <td><span class="fw-normal">12</span></td>
+
+                            <td>
+                                <div class="btn-group">
+									<input class="form-check-input" type="checkbox" value="" id="defaultCheck10">
+                                </div>
+                            </td>
+                        </tr> 
+
                     </tbody>
                 </table>
                 <div class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
@@ -130,7 +150,7 @@
 			</div>
 			<div id="mode2" class="mode2 col-6" style="visibility:hidden">
 				<div class="card card-body border-0 shadow  table-wrapper table-responsive">
-					<div class="fs-5 fw-normal mb-2">Entry log of person with Beacon : <b>B002</b> </div>
+					<div class="fs-5 fw-normal mb-2">Entry log of person with Beacon : <b>B001</b> </div>
 					<table class="table table-hover">
 						<thead>
 							<tr>
@@ -150,10 +170,10 @@
 									</a>
 								</td>
 								<td>
-									<span class="fw-normal">B002</span>
+									<span class="fw-normal">B001</span>
 								</td>
-								<td><span class="fw-normal">6 Dec 2021 17:50:31</span></td>                        
-								<td><span class="fw-normal">6 Dec 2021 17:54:59</span></td>
+								<td><span class="fw-normal">8 Dec 2021 00:24:30</span></td>                        
+								<td><span class="fw-normal">8 Dec 2021 00:28:46</span></td>
 	
 								<td>
 									<div class="btn-group">
@@ -190,8 +210,8 @@
 								<td>
 									<span class="fw-normal">B002</span>
 								</td>
-								<td><span class="fw-normal">8 Dec 2021 13:42:</span></td>                        
-								<td><span class="fw-normal">8 Dec 2021 14:54:31</span></td>
+								<td><span class="fw-normal">6 Dec 2021 13:42:49</span></td>                        
+								<td><span class="fw-normal">6 Dec 2021 14:54:31</span></td>
 	
 								<td>
 									<div class="btn-group">
@@ -272,10 +292,10 @@
 						<div class="pt-2"></div>
 						<div class="row">
 							<div class="col-10">
-								<input class="slider" type="range" id="slider" value="0" min="0" max="100" oninput="console.log(this.value)" onchange="console.log(this.value)" style="width:100%">
+								<input class="slider" type="range" id="slider" value="0" min="0" max="100" oninput="sliderChange(this.value)" onchange="sliderChange(this.value)" style="width:100%">
 							</div>
 							<div class="col-2">
-								<button class="btn btn-primary" type="button" style="width:100%" onclick="document.getElementById('slider').value='100'; console.log(100) ">Go to End</button>
+								<button class="btn btn-primary" type="button" style="width:100%" onclick="document.getElementById('slider').value='100'; sliderChange(100) ">Go to End</button>
 							</div>
 						</div>
 
@@ -295,7 +315,7 @@
                                         <h3 class="fw-extrabold mb-1">345,678</h3>
                                     </div>
                                 </div> -->
-                                <div class="col-12 col-xl-8 px-xl-3 ">
+                                <div class="col-12 col-xl-12 px-xl-3 ">
                                     <div class="ml-5 d-none d-sm-block">
                                         <h2 class="h6 text-gray-400 mb-0">Building #</h2>
                                         <h3 id="currentView"  class="fw-extrabold mb-2">C5</h3>
@@ -308,12 +328,12 @@
                                     <div class="pt-2"></div>
                                     <div class="ml-5 d-none d-sm-block">
                                         <h2 class="h6 text-gray-400 mb-0">Person Count in Building</h2>
-                                        <h3 id="totalPerson"  class="fw-extrabold mb-2">-</h3>
+                                        <h3 id="totalPerson"  class="fw-extrabold mb-2">3</h3>
                                     </div>
                                     <div class="pt-2"></div>
                                     <div class="ml-5 d-none d-sm-block">
                                         <h2 class="h6 text-gray-400 mb-0">Displayed Timestamp</h2>
-                                        <h3 id="totalPerson"  class="fw-extrabold mb-2">-</h3>
+                                        <h3 id="timeStamp"  class="fw-extrabold mb-2">-</h3>
                                     </div>
                                     <!-- <small class="d-flex align-items-center text-gray-500">
                                         Feb 1 - Apr 1,  
@@ -325,7 +345,7 @@
                                     </div> -->
                                     <div class="pt-5"></div>
                                     <div class="ml-5 d-none d-sm-block">
-                                        <h2 class="h6 text-gray-400 mb-0">Close Contacts <i>(sorted by highest prob. of infection)</i> </h2>
+                                        <h2 class="h6 text-gray-400 mb-0">Close Contacts</h2>
                                         <h3 id="currentView"  class="fw-extrabold mb-2"></h3>
                                     </div>
                                     <div class="pt-2"></div>
@@ -339,7 +359,7 @@
                                             <tr>
                                                 <th class="border-0 rounded-start">Beacon #</th>
                                                 <th class="border-0">Infection Prob.</th>
-                                                <th class="border-0">Contact</th>
+                                                <th class="border-0">Alert</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -349,17 +369,45 @@
                                             <tr>
                                                 <td class="border-0">                                             
                                                     <a href="#" class="d-flex align-items-center text-danger">
-                                                        <div><span class="h6">B002</span></div>
+                                                        <div><span class="h6">B001</span></div>
                                                     </a>
                                                 </td>
                                                 <td class="border-0">
                                                     <div class="d-flex align-items-center text-danger">
-                                                        <span class="fw-bold" >1.00 (initial confirmation)</span>
+                                                        <span class="fw-bold" >100 (initial confirmation)</span>
                                                     </div>
                                                 </td>
                                                 <td class="border-0">
                                                     <div class="d-flex align-items-center">
-                                                        <span class="fw-bold">-</span>
+                                                        <span class="fw-bold">
+                                                            <button type="button" class="btn btn-primary d-inline-flex align-items-center">
+                                                                <svg class="icon icon-xxs" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <!-- End of Item -->
+
+                                            <!-- Item -->
+                                            <tr>
+                                                <td class="border-0">                                             
+                                                    <a href="#" class="d-flex align-items-center">
+                                                        <div><span id="close-b002" class="h6"></span></div>
+                                                    </a>
+                                                </td>
+                                                <td class="border-0">
+                                                    <div class="d-flex align-items-center">
+                                                        <span id="close-b002prob" class="fw-bold" ></span>
+                                                    </div>
+                                                </td>
+                                                <td class="border-0">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="fw-bold">
+                                                            <button id="button2" type="button" class="btn btn-primary d-inline-flex align-items-center" style="visibility: hidden;">
+                                                                <svg class="icon icon-xxs" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                                                            </button>
+                                                        </span>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -372,8 +420,66 @@
                             
                             
                             <div class="pt-5"></div>
+                            <div class="col-12 col-xl-12 px-xl-3 ">
+                                <div class="ml-5 d-none d-sm-block">
+                                    <h2 class="h6 text-gray-400 mb-0">Low Risk</h2>
+                                    <h3 id="currentView"  class="fw-extrabold mb-2"></h3>
+                                </div>
+                                <div class="pt-2"></div>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-centered table-nowrap mb-0 rounded">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th class="border-0 rounded-start">Beacon #</th>
+                                            <th class="border-0">Infection Prob.</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+        
+                                       <!-- Item -->
+                                        <tr>
+                                            <td class="border-0">                                             
+                                                <a href="#" class="d-flex align-items-center">
+                                                    <div><span class="h6">B003</span></div>
+                                                </a>
+                                            </td>
+                                            <td class="border-0">
+                                                <div class="d-flex align-items-center">
+                                                    <span id="low-b003prob" class="fw-bold" ></span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- End of Item -->
+
+                                        <!-- Item -->
+                                        <tr>
+                                            <td class="border-0">                                             
+                                                <a href="#" class="d-flex align-items-center ">
+                                                    <div><span id="low-b002" class="h6">B002</span></div>
+                                                </a>
+                                            </td>
+                                            <td class="border-0">
+                                                <div class="d-flex align-items-center ">
+                                                    <span id="low-b002prob" class="fw-bold" ></span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- End of Item -->
+            
+                                    </tbody>
+                                </table>
+                            </div>
                             <a class="btn btn-sm btn-secondary d-inline-flex align-items-center me-2" href="javascript:toggleDebug();">Debug On/Off</a>
+
                         </div>
+                            
+
+
+                        </div>
+
                         
                         <!-- <div class="card border-0 shadow">
                             <div class="card-body">

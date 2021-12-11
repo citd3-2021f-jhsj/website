@@ -44,7 +44,7 @@
                         Select Building
                     </button>
                     <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1">
-                        <a class="dropdown-item d-flex align-items-center" href="javascript:setView('notC5');" >
+                        <a class="dropdown-item d-flex align-items-center" href="javascript:setView('notC5')" >
                             <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"></path></svg>
                             View Campus
                         </a>
@@ -131,7 +131,7 @@
                                 
 
                                 <!-- TABLE -->
-                                <div class="table-responsive">
+                                <div id="congest-table" class="table-responsive">
                                     <table class="table table-centered table-nowrap mb-0 rounded">
                                         <thead class="thead-light">
                                             <tr>
@@ -150,8 +150,8 @@
                                                     </a>
                                                 </td>
                                                 <td class="border-0">
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="fw-bold" style="letter-spacing:2px">-</span>
+                                                    <div class="d-flex align-items-center text-sucess">
+                                                        <span class="fw-bold text-success" style="letter-spacing:2px">NORMAL</span>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -164,9 +164,9 @@
                                                         <div><span class="h6">STUDIO 2</span></div>
                                                     </a>
                                                 </td>
-                                                <td class="border-0 ">
+                                                <td class="border-0 text-success ">
                                                     <div class="d-flex align-items-center">
-                                                        <span class="fw-bold" style="letter-spacing:2px">-</span>
+                                                        <span class="fw-bold" style="letter-spacing:2px">NORMAL</span>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -179,10 +179,26 @@
                                                         <div><span class="h6">STUDIO 3</span></div>
                                                     </a>
                                                 </td>
-                                                <td class="border-0 text-danger">
+                                                <td class="border-0 text-success">
                                                     <div class="d-flex align-items-center">
                                                         <!-- warning / success -->
-                                                        <span class="fw-bold" style="letter-spacing:2px">DANGER</span>
+                                                        <span class="fw-bold" style="letter-spacing:2px">NORMAL</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <!-- End of Item -->
+
+                                            <!-- Item -->
+                                            <tr>
+                                                <td class="border-0">                                             
+                                                    <a href="#" class="d-flex align-items-center">
+                                                        <div><span class="h6">STUDIO 4</span></div>
+                                                    </a>
+                                                </td>
+                                                <td class="border-0 text-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- warning / success -->
+                                                        <span class="fw-bold" style="letter-spacing:2px">NORMAL</span>
                                                     </div>
                                                 </td>
                                             </tr>
